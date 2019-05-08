@@ -88,7 +88,8 @@
 
                       <div class="slider-title" style="margin-top:14px;">Month</div>
                       <div id="month-slider" style="padding-left:10px;">
-                        <input id='mslider' class='row slider' type='range' min='1' max='12' step='1' value='12' />
+                        <input id='mslider' type='range' class='slider'  min='1' max='12' step='1' value='1' />
+                        <!-- class='row slider'  min='1' max='12' step='1' value='12'  -->
                         <div class="weekticks">
                         <p>Jan</p>
                         <p></p>
@@ -664,7 +665,7 @@
       <div class="nav-label" id="sidebar-bottom">
           <ul class="pagination" style="text-align:center">
             <li><a href="about.html" style="margin-right:15px;"><span>About</span></a></li>
-            <li><a href="RMarkdown.html" style="margin-right:15px;"><span>Algorithm</span></a></li>
+            <li><a href="https://wazieville.github.io/" style="margin-right:15px;"><span>Algorithm</span></a></li>
             <li><a href="results.html" style="margin-right:15px;"><span>Results</span></a></li>
             <li><a data-toggle="modal" data-target="#exampleModal"><span>Help</span></a></li>
           </ul>
@@ -734,11 +735,11 @@
             <li>Get average hourly jam lengths in the past.</li>
             <li>And also average hourly jam lengths for any given day.</li>
           </ul></p>
-      
+
           <p id="p2">Other interactions:
-              <br><ul id="p2">
-              <li>Click on 3-dotted icon on the sidebar to collapse it for full screen map</li>
-            </ul></p>
+          <br><ul id="p2">
+          <li>Click on 3-dotted icon on the sidebar to collapse it for full screen map</li>
+        </ul></p>
 
             <p style="text-align:center; "><p>
             <p id="p2"><em>This application uses uses jam length data from the congestion prediction algorithm.
@@ -760,6 +761,7 @@
     <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.2.0/mapbox-gl-geocoder.min.js'></script>
     <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.54.0/mapbox-gl.js'></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="js/underscore.js"></script>
 
     <!-- Javascript Code for navbar and sidepanels -->
@@ -768,11 +770,6 @@
     <script src ="js/helperfunctions.js"></script>
     <!-- Javascript Code for charts -->
     <script src="js/charts.js"></script>
-
-    <script>
-
-
-    </script>
 
   </body>
 </html>
