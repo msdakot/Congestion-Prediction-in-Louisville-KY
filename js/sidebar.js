@@ -67,10 +67,10 @@ $('#demolist li a').on('click', function(){
 
 var mt;
 
-document.getElementById('mslider').addEventListener('input', function(e) {
-  mt = parseInt(e.target.value);
-    console.log(mt);
-});
+// document.getElementById('mslider').addEventListener('input', function(e) {
+//   mt = parseInt(e.target.value);
+//     console.log(mt);
+// });
 
 function choosepoly(n){
   if(n==1){return polyAr[0];
@@ -87,72 +87,78 @@ function choosepoly(n){
   // }
 }
 
-// $('.mslider').on('change',function(){
+// $('.mslider').Slider({ id: "slider12b", min: 1, max: 12, range: true, value:[3, 7] });
 
-//   console.log("clicked!");
+// $('.mslider').on('change', function(event) {
+//   .addEventListener('input', function(e) {
+//     mt = parseInt(e.target.value);
+//         console.log(mt);
+//   });
 // });
+var a =1;
+
+$('#mslider').slider().on('change', function(e) {
+     a = parseInt(e.target.value);
+    if(a!==1){
+      console.log("changed",a);
+    } else {
+      console.log("still on ", a);
+    }
+
+    return chMonth(a);
+});
+
 
 //
 function chMonth(n){
-        var polysb = choosepoly(n);
+  var grprev, gr;
+  if(n==2) {
+      grprev= 'grids';
+      gr  = 'grids-f';
+    } else if (n==3) {
+      grprev= 'grids-f';
+      gr = 'grids-m';
+    } else if(n==4) {
+      grprev= 'grids-m';
+      gr = 'grids-a';
+    }
+    map.setLayoutProperty(gr, 'visibility', 'visible');
+    map.setLayoutProperty(grprev, 'visibility', 'none');
+    console.log("other month turned on!");
 
-        map.addSource('fishnetsM', {
-          type: 'geojson',
-          data: polysb
+    yetano(gr);
+};
+
+
+function yetano(gr){
+  map.on('mouseenter', gr, function (e) {
+        map.getCanvas().style.cursor = 'pointer';
+    });
+
+
+  map.on('mouseleave', gr, function () {
+        map.getCanvas().style.cursor = '';
+    });
+      //
+      document.getElementById('wslider').addEventListener('input', function(e) {
+        var wDay = parseInt(e.target.value);
+        var weekD = getWeekday(wDay);
+        // update the map
+          flt_wDay = ['==', "Weekday", weekD];
+          map.setFilter(gr, ['all',flt_wDay, flt_hr]);
+          console.log("inside function",weekD);
         });
 
-        map.setLayoutProperty('grids', 'visibility', 'none');
+        function filterBy(hour) {
 
-        map.addLayer({
-          "id":"grids-mt",
-          "type":"fill",
-          'source': 'fishnetsM',
-          'layout': {
-            'visibility': 'visible'},
-          'filter': ['all', flt_wDay, flt_hr],
-          'paint':{
-            // 'fill-color':'#f3f333',
-            "fill-color": {
-              property: 'Predicted',
-              stops: [
-                [brks[0], colorRamp[0]],
-                [brks[1], colorRamp[4]],
-                [brks[2], colorRamp[3]],
-                [brks[3], colorRamp[3]],
-                [brks[4], colorRamp[1]],
-                [brks[5], colorRamp[2]]]
-              },
-            'fill-opacity': 0.3,
-            'fill-outline-color':'#fff',
-          }
-          });
+            var flt_hr = ['==', "Hour", hour];
+            map.setFilter(gr, ['all',flt_wDay, flt_hr]);
+            // map.setLayoutProperty('grids_empty', 'visibility', 'none');
+        }
 
-        map.on('mouseenter', 'grids', function () {
-              map.getCanvas().style.cursor = 'pointer';
-          });
-        map.on('mouseleave', 'grids', function () {
-              map.getCanvas().style.cursor = '';
-          });
-
-        document.getElementById('wslider').addEventListener('input', function(e) {
-            var wDay = parseInt(e.target.value);
-            var weekD = getWeekday(wDay);
-            // update the map
-              flt_wDay = ['==', "Weekday", weekD];
-              map.setFilter('grids', ['all',flt_wDay, flt_hr]);
-              console.log(weekD);
-            });
-
-            function filterBy(hour) {
-
-                var flt_hr = ['==', "Hour", hour];
-                map.setFilter('grids', ['all',flt_wDay, flt_hr]);
-                // map.setLayoutProperty('grids_empty', 'visibility', 'none');
-            }
-
-        document.getElementById('hslider').addEventListener('input', function(e) {
-            var hour= parseInt(e.target.value);
-              console.log(hour);
-              filterBy(hour);
-          });
-};
+      document.getElementById('hslider').addEventListener('input', function(e) {
+        var hour= parseInt(e.target.value);
+          console.log(hour);
+          filterBy(hour);
+      });
+}

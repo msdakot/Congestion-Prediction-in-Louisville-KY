@@ -79,17 +79,17 @@ function addr(dat) {
 
 var mt;
 
-document.getElementById('mslider').addEventListener('input', function(e) {
-  mt = parseInt(e.target.value);
-    // console.log(mt);
-});
+// document.getElementById('mslider').addEventListener('input', function(e) {
+//   mt = parseInt(e.target.value);
+//     // console.log(mt);
+// });
 
 
 var polyAr = [
   "https://raw.githubusercontent.com/msdakot/Congestion-Prediction-in-Louisville-KY/master/database/fishJan.geojson",
-  "https://raw.githubusercontent.com/msdakot/Congestion-Prediction-in-Louisville-KY/master/database/fishFeb.geojson"
-  // "https://raw.githubusercontent.com/msdakot/Congestion-Prediction-in-Louisville-KY/master/database/fishMar.geojson",
-  // "https://raw.githubusercontent.com/msdakot/Congestion-Prediction-in-Louisville-KY/master/database/fishApr.geojson",
+  "https://raw.githubusercontent.com/msdakot/Congestion-Prediction-in-Louisville-KY/master/database/fishFeb.geojson",
+  "https://raw.githubusercontent.com/msdakot/Congestion-Prediction-in-Louisville-KY/master/database/fishMar.geojson",
+  "https://raw.githubusercontent.com/msdakot/Congestion-Prediction-in-Louisville-KY/master/database/fishApr.geojson"
   // "https://raw.githubusercontent.com/msdakot/Congestion-Prediction-in-Louisville-KY/master/database/fishMay.geojson",
   // "https://raw.githubusercontent.com/msdakot/Congestion-Prediction-in-Louisville-KY/master/database/fishJun.geojson"
 ];
@@ -113,10 +113,10 @@ function choosepoly(n){
 
 // var poly = "https://raw.githubusercontent.com/msdakot/Congestion-Prediction-in-Louisville-KY/master/database/fishJan.geojson";
 var poly = polyAr[0];
+var polysb = polyAr[1];
 var fishHr = "https://raw.githubusercontent.com/msdakot/Congestion-Prediction-in-Louisville-KY/master/database/fish_av_hour.geojson";
 var fishwDay = "https://raw.githubusercontent.com/msdakot/Congestion-Prediction-in-Louisville-KY/master/database/fish_av_wday.geojson";
 var fishhour,fishWeek,polyparsed;
-
 
 
 
@@ -133,12 +133,11 @@ $.ajax(fishwDay).done(function(fdat) {
 });
 
 // either run the code below or directly call it from url
-// $.ajax(poly).done(function(poly){
+// $.ajax(x).done(function(poly){
 //   // Parse JSON
 //   polyparsed = JSON.parse(poly);
 //   // Show the initial slide
-//
-//     console.log("done!");
+//   console.log("done!");
 // });
 
 
@@ -199,68 +198,192 @@ map.on('style.load',function(){
         }
         });
 
-      map.on('mouseenter', 'grids', function () {
-            map.getCanvas().style.cursor = 'pointer';
-        });
-      map.on('mouseleave', 'grids', function () {
-            map.getCanvas().style.cursor = '';
+
+        map.addSource('fishnetsF', {
+          type: 'geojson',
+          data: polyAr[1]
         });
 
+        map.addLayer({
+          "id":"grids-f",
+          "type":"fill",
+          'source': 'fishnetsF',
+          'layout': {
+            'visibility': 'none'},
+          // 'filter': ['all', flt_wDay, flt_hr],
+          'paint':{
+            // 'fill-color':'#f3f333',
+            "fill-color": {
+              property: 'Predicted',
+              stops: [
+                [brks[0], colorRamp[0]],
+                [brks[1], colorRamp[4]],
+                [brks[2], colorRamp[3]],
+                [brks[3], colorRamp[3]],
+                [brks[4], colorRamp[1]],
+                [brks[5], colorRamp[2]]]
+              },
+            'fill-opacity': 0.3,
+            'fill-outline-color':'#fff',
+          }
+          });
 
-        // document.getElementById('mslider').addEventListener('input', function(e) {
-        //   var month = parseInt(e.target.value);
-        //   // update the map
-        //     flt_month = ['==', "Mnth", month];
-        //     map.setFilter('grids', ['all', flt_month, flt_wDay, flt_hr]);
-        //     console.log(flt_month);
+          map.addSource('fishnetsM', {
+            type: 'geojson',
+            data: polyAr[2]
+          });
+
+          map.addLayer({
+            "id":"grids-m",
+            "type":"fill",
+            'source': 'fishnetsM',
+            'layout': {
+              'visibility': 'none'},
+            // 'filter': ['all', flt_wDay, flt_hr],
+            'paint':{
+              // 'fill-color':'#f3f333',
+              "fill-color": {
+                property: 'Predicted',
+                stops: [
+                  [brks[0], colorRamp[0]],
+                  [brks[1], colorRamp[4]],
+                  [brks[2], colorRamp[3]],
+                  [brks[3], colorRamp[3]],
+                  [brks[4], colorRamp[1]],
+                  [brks[5], colorRamp[2]]]
+                },
+              'fill-opacity': 0.3,
+              'fill-outline-color':'#fff',
+            }
+            });
+
+
+            map.addSource('fishnetsA', {
+              type: 'geojson',
+              data: polyAr[3]
+            });
+
+            map.addLayer({
+              "id":"grids-a",
+              "type":"fill",
+              'source': 'fishnetsA',
+              'layout': {
+                'visibility': 'none'},
+              // 'filter': ['all', flt_wDay, flt_hr],
+              'paint':{
+                // 'fill-color':'#f3f333',
+                "fill-color": {
+                  property: 'Predicted',
+                  stops: [
+                    [brks[0], colorRamp[0]],
+                    [brks[1], colorRamp[4]],
+                    [brks[2], colorRamp[3]],
+                    [brks[3], colorRamp[3]],
+                    [brks[4], colorRamp[1]],
+                    [brks[5], colorRamp[2]]]
+                  },
+                'fill-opacity': 0.3,
+                'fill-outline-color':'#fff',
+              }
+              });
+
+
+              yetano("grids");
+
+
+        // var popup = new mapboxgl.Popup({
+        //   closeButton: false,
+        //   closeOnClick: false
         // });
+      //
+      // map.on('mouseenter', 'grids', function (e) {
+      //       map.getCanvas().style.cursor = 'pointer';
+      //
+      //       // var coords = grids[0].geometry.coordinates.slice();
+      //       // var id = grids[0].properties.FishnetID;
+      //       // var preds = e.features[0].properties.Predicted;
+      //       // var obs = e.features[0].properties.Observed;
+      //       // var hr= e.features[0].properties.Hours;
+      //       // var wday = e.features[0].properties.Weekday;
+      //       // var err = e.features[0].properties.MAE;
+      //       //
+      //       // // var fortHML = "<strong>"id"</strong>"+"\n"+wDay+ " "+hr.toString()+" mins"+"\n"+"Obs. length:" + " "+obs.tostring()+" mins"+"\n"+"Pre. length:"+ " "+"mins"+"Error: "+ err.toString()+"mins";
+      //       //
+      //       // popup.setLngLat(coords)
+      //       // .setHTML(fortHML)
+      //       // .addTo(map);
+      //
+      //       // if (e.features.length > 0) {
+      //       //   if (hoveredStateId) {
+      //       //   map.setFeatureState({source: 'states', id: hoveredStateId}, { hover: false});
+      //       //   }
+      //       //   hoveredStateId = e.features[0].id;
+      //       //   map.setFeatureState({source: 'states', id: hoveredStateId}, { hover: true});
+      //       //   }
+      //   });
+      //
+      //
+      // map.on('mouseleave', 'grids', function () {
+      //       map.getCanvas().style.cursor = '';
+      //       popup.remove();
+      //   });
+      //
+      //
+      //   // document.getElementById('mslider').addEventListener('input', function(e) {
+      //   //   var month = parseInt(e.target.value);
+      //   //   // update the map
+      //   //     flt_month = ['==', "Mnth", month];
+      //   //     map.setFilter('grids', ['all', flt_month, flt_wDay, flt_hr]);
+      //   //     console.log(flt_month);
+      //   // });
+      //
+      // document.getElementById('wslider').addEventListener('input', function(e) {
+      //   var wDay = parseInt(e.target.value);
+      //   var weekD = getWeekday(wDay);
+      //   // update the map
+      //     flt_wDay = ['==', "Weekday", weekD];
+      //     map.setFilter('grids', ['all',flt_wDay, flt_hr]);
+      //     console.log(weekD);
+      //   });
+      //
+      //   function filterBy(hour) {
+      //
+      //       var flt_hr = ['==', "Hour", hour];
+      //       map.setFilter('grids', ['all',flt_wDay, flt_hr]);
+      //       // map.setLayoutProperty('grids_empty', 'visibility', 'none');
+      //   }
+      //
+      // document.getElementById('hslider').addEventListener('input', function(e) {
+      //   var hour= parseInt(e.target.value);
+      //     console.log(hour);
+      //     filterBy(hour);
+      // });
 
-      document.getElementById('wslider').addEventListener('input', function(e) {
-        var wDay = parseInt(e.target.value);
-        var weekD = getWeekday(wDay);
-        // update the map
-          flt_wDay = ['==', "Weekday", weekD];
-          map.setFilter('grids', ['all',flt_wDay, flt_hr]);
-          console.log(weekD);
-        });
-
-        function filterBy(hour) {
-
-            var flt_hr = ['==', "Hour", hour];
-            map.setFilter('grids', ['all',flt_wDay, flt_hr]);
-            // map.setLayoutProperty('grids_empty', 'visibility', 'none');
-        }
-
-      document.getElementById('hslider').addEventListener('input', function(e) {
-        var hour= parseInt(e.target.value);
-          console.log(hour);
-          filterBy(hour);
-      });
 
       // Single Gridcell selection
       map.addLayer({
           "id": "grid-highlighted",
           "type": "fill",
-          "source": "fishnets",
+          "source": "fishnets_grids",
           // 'source-layer':'fishJan-bhb97l',
           'layout': {
             'visibility': 'visible'},
           "paint": {
           "fill-outline-color": "#484896",
           "fill-color": "#6e599f",
-          "fill-opacity": 0.03
+          "fill-opacity": 0.6
           },
-          "filter": ["in", "FishnetID", ""]
+          "filter": ["in", "fishnet_id", ""]
           });
 
       map.on('click', function(e) {
         // set bbox as 5px reactangle area around clicked point
         var bbox = [[e.point.x - 5, e.point.y - 5], [e.point.x + 5, e.point.y + 5]];
-        var features = map.queryRenderedFeatures(bbox, { layers: ['grids'] });
+        var features = map.queryRenderedFeatures(bbox, { layers: ['grids_empty'] });
         var filter = features.reduce(function(memo, feature) {
-        memo.push(feature.properties.FishnetID);
+        memo.push(feature.properties.fishnet_id);
         return memo;
-        }, ['in', 'FishnetID']);
+        }, ['in', 'fishnet_id']);
 
         console.log(filter);
 
@@ -268,6 +391,7 @@ map.on('style.load',function(){
         map.setLayoutProperty('grid-highlighted', 'visibility', 'visible');
         fishinfo();
         map.setLayoutProperty('grids', 'visibility', 'none');
+        // map.setLayoutProperty('grids_empty', 'visibility', 'none');
         // updating the ID info
         var id = filter[2];
         document.getElementById('fid').innerText = id;
