@@ -126,6 +126,14 @@ function getMonth(n){
   }
 };
 
+function getFreeway(n){
+  if(n==1){
+    return "Freeway";
+  } else if (n==0) {
+    return "Other road";
+  }
+}
+
 
 
 var a =1;
@@ -180,12 +188,13 @@ function yetano(gr){
         var Month = getMonth(e.features[0].properties.Mnth);
         var Wday = e.features[0].properties.Weekday;
         var Weat = e.features[0].properties.Weather;
+        var fway = getFreeway(e.features[0].properties.Freeway);
         var hr = e.features[0].properties.Hour.toString() +" hrs";
         var obs = e.features[0].properties.Observed.toString() +" mins";
         var Pred = e.features[0].properties.Predicted.toString()+" mins";
         var er =e.features[0].properties.MAE.toString()+" mins";
 
-        var forHTML = "<strong>"+id.fontsize(2)+"</strong>"+"<br>"+"<br>"+ Month+" "+Wday+ " "+ hr+"<br>"+"Weather: "+Weat+"<br>"+"Predicted: "+Pred+"<br>"+"Observed: "+obs+"<br>"+"Error: "+er;
+        var forHTML = "<strong>"+id.fontsize(2)+"</strong>"+"<br>"+"<br>"+ Month+" "+Wday+ " "+ hr+"<br>"+"Weather: "+Weat+"<br>"+ "Road type: "+fway+"<br>"+"Predicted: "+Pred+"<br>"+"Observed: "+obs+"<br>"+"Error: "+er;
 
         popup.setLngLat(coordinates)
           .setHTML(forHTML)
