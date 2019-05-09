@@ -315,6 +315,9 @@ map.on('style.load',function(){
         map.setLayoutProperty('grid-highlighted', 'visibility', 'visible');
         fishinfo();
         map.setLayoutProperty('grids', 'visibility', 'none');
+        map.setLayoutProperty('grids-f', 'visibility', 'none');
+        map.setLayoutProperty('grids-m', 'visibility', 'none');
+        map.setLayoutProperty('grids-a', 'visibility', 'none');
         // map.setLayoutProperty('grids_empty', 'visibility', 'none');
         // updating the ID info
         var id = filter[2];
