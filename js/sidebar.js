@@ -52,13 +52,24 @@ function colpa () {
     $(".rotate").toggleClass("down");
   };
 
+
+
+
 $(".filt-list li a").click(function(){
   $(this).parents(".dropdown").find('.btn-secondary').html($(this).text() + ' <span class="item-dropdown"></span>');
-  $(this).parents(".dropdown").find('.btn').val($(this).html());
-  var red= $(this).parents(".dropdown").find('.btn').val($(this).html());
-  var txt = $(this).parents(".dropdown").find('.btn-secondary').html($(this).text());
+  $(this).parents(".dropdown").find('.btn-secondary').val($(this).html());
+  red= $(this).parents(".dropdown").find('.btn-secondary').val($(this).html()).context.text;
   console.log(red);
+  return red;
 });
+
+function getWeather(r){
+  if(r=="Cloudy"){
+    return "cloudy";
+  }else if (r =="Rainy") {
+    return "rainy";
+  }
+}
 
 $('#demolist li a').on('click', function(){
     $('#datebox').val($(this).html());
@@ -198,6 +209,8 @@ function yetano(gr){
           createChart(chartJson);
           console.log("inside function",weekD);
         });
+
+        // flt_wea = ['==',"Weather",red];
 
         function filterBy(hour) {
 

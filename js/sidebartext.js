@@ -77,7 +77,7 @@ function addr(dat) {
   return fHtml;
 }
 
-var mt,weekD,chartJson,chartM;
+var mt,weekD,chartJson,chartM,red;
 
 
 var polyAr = [
@@ -131,6 +131,7 @@ $.ajax(fishwDay).done(function(fdat) {
   // var flt_month = ['==', "Mnth", 1];
   var flt_wDay = ['==', "Weekday", 1];
   var flt_hr = ['==', "Hour", 10];
+  var flt_wea = ['==', "Weather", ""];
 
 map.on('style.load',function(){
 
@@ -167,7 +168,7 @@ map.on('style.load',function(){
         // 'source-layer':'fishJan-bhb97l',
         'layout': {
           'visibility': 'visible'},
-        'filter': ['all', flt_wDay, flt_hr],
+        'filter': ['all', flt_wDay,flt_hr],
         'paint':{
           // 'fill-color':'#f3f333',
           "fill-color": {
