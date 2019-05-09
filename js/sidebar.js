@@ -43,6 +43,7 @@ var fishinfo =  function () {
     $('.filter-manager').hide();
     $('.chart-container').hide();
     $('.hr-scrl').hide();
+    $('.legend').hide();
     $('.interaction-manager').show();
 };
 
