@@ -148,19 +148,7 @@ button.button {
   color: #FFFFFF;
 }
 
-.legend {
-  position: absolute;
-  left: 600px;
-  bottom: 20px;
-  width: 600px;
-  height: 140px;
-  /* background-color: #2b383e; */
-  opacity: 0.8;
-  z-index: 2000;
-  border: 0px solid #CCCCCC;
-  border-radius: 8px;
 
-}
 
 #data-link:link, #data-link:visited  {
   color: #e6f0f0;
@@ -168,23 +156,7 @@ button.button {
   text-decoration: underline;
 }
 
-.legend li {
-  font-size: 80%;
-  list-style: none;
-  margin-left: 0;
-  margin-bottom: 6px;
-  padding: 5px;
-  color:#2b383e;
-}
 
-.legend span {
-  display:block;
-  height: 20px;
-  float: left;
-  width: 20px;
-  margin: 0 7px;
-  border-radius:50% /*becomes a circle*/
-}
 
 #toPlot {
   display: inline;
@@ -981,4 +953,63 @@ li .precip {
 }
 .select-css option {
 	font-weight:normal;
+}
+
+
+.mapboxgl-popup {
+max-width: 400px;
+font: 12px/20px;
+color: #fff;
+
+}
+
+
+.legend {
+
+  position: absolute;
+  width: 20%;
+  height: 30px;
+  right: 50px;
+  bottom: 110px;
+  background-color: rgba(41, 50, 60,0.8);
+}
+
+#legend-title {
+
+  position: relative;
+  left: 8px;
+  top: 25%;
+  width: 70px;
+  font-size: 0.9rem;
+  margin-top: 5px;
+  width: 50px;
+}
+
+.session {
+  margin-bottom: 20px;
+}
+
+.row-legend {
+
+  height: 7px;
+  position: relative;
+  width: 75%;
+  margin-top: -32px;
+  left: 65px;
+
+}
+
+
+.colors {
+  /* background: linear-gradient(to right, #2dc4b2, #3bb3c3, #669ec4, #8b88b6, #a2719b, #aa5e79); */
+  background: linear-gradient(to right, #bcbcbc, #21BFD7, #26A1E3, #6955F5, #A626FB, #D01B1B);
+  margin-bottom: 5px;
+}
+
+.label-legend {
+
+  width: 14.5%;
+  display: inline-block;
+  text-align: center;
+  font-size: 0.7rem;
 }

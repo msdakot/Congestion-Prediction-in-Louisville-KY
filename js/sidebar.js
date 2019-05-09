@@ -13,11 +13,13 @@ $('.filter-manager').hide();
 $('.interaction-manager').hide();
 $('.chart-container').hide();
 $('.hr-scrl').hide();
+$('.legend').hide();
 
 $('.Interact').click(function(e){
   $('.filter-manager').hide();
   $('.chart-container').hide();
   $('.hr-scrl').hide();
+  $('.legend').hide();
   $('.interaction-manager').show();
 });
 
@@ -26,6 +28,7 @@ $('.Filter').click(function(e) {
   $('.filter-manager').show();
   $('.chart-container').show();
   $('.hr-scrl').show();
+  $('.legend').show();
   map.setLayoutProperty('grids', 'visibility', 'visible');
   map.setLayoutProperty('grid-highlighted', 'visibility', 'none');
 });

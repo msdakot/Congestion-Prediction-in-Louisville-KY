@@ -21,26 +21,26 @@
 
     /* Popup styling  */
 
-    .mapboxgl-Popup-content{
-            background-color: #242730;
-    }
+        .mapboxgl-Popup-content{
+                background-color: #242730;
+        }
 
-    .mapboxgl-popup-anchor-top .mapboxgl-popup-tip,
-    .mapboxgl-popup-anchor-top-left .mapboxgl-popup-tip,
-    .mapboxgl-popup-anchor-top-right .mapboxgl-popup-tip {
-        border-bottom-color: #242730;
-        }
-    .mapboxgl-popup-anchor-bottom .mapboxgl-popup-tip,
-    .mapboxgl-popup-anchor-bottom-left .mapboxgl-popup-tip,
-    .mapboxgl-popup-anchor-bottom-right .mapboxgl-popup-tip {
-        border-top-color:#242730;
-        }
-    .mapboxgl-popup-anchor-left .mapboxgl-popup-tip {
-        border-right-color: #242730;
-        }
-    .mapboxgl-popup-anchor-right .mapboxgl-popup-tip {
-        border-left-color: #242730;
-        }
+        .mapboxgl-popup-anchor-top .mapboxgl-popup-tip,
+        .mapboxgl-popup-anchor-top-left .mapboxgl-popup-tip,
+        .mapboxgl-popup-anchor-top-right .mapboxgl-popup-tip {
+            border-bottom-color: #242730;
+            }
+        .mapboxgl-popup-anchor-bottom .mapboxgl-popup-tip,
+        .mapboxgl-popup-anchor-bottom-left .mapboxgl-popup-tip,
+        .mapboxgl-popup-anchor-bottom-right .mapboxgl-popup-tip {
+            border-top-color:#242730;
+            }
+        .mapboxgl-popup-anchor-left .mapboxgl-popup-tip {
+            border-right-color: #242730;
+            }
+        .mapboxgl-popup-anchor-right .mapboxgl-popup-tip {
+            border-left-color: #242730;
+            }
 
    </style>
 
@@ -211,7 +211,7 @@
 
                        <div class="slider-title" style="margin-top:14px;">WeekDay</div>
                        <div id="week-slider" style="padding-left:30px;" data-toggle="tooltip" title=range>
-                         <input id='wslider' class='row slider' type='range' min='1' max='7' step='1' value='5'/>
+                         <input id='wslider' class='row slider' type='range' min='1' max='7' step='1' value='1'/>
                          <div class="weekticks">
                           <p>M</p>
                           <p></p>
@@ -713,6 +713,23 @@
           </div>
       </div>
     </div>
+
+    <div class="legend">
+      <div class='session'>
+          <p id="legend-title"> Legend</p>
+          <div class='row-legend colors'>
+          </div>
+          <div class='row-legend labels' style="margin-top: -11.5px;">
+            <div class='label-legend '>0</div>
+            <div class='label-legend '>1</div>
+            <div class='label-legend '>2</div>
+            <div class='label-legend '>3</div>
+            <div class='label-legend '>4</div>
+            <div class='label-legend '>5+</div>
+          </div>
+      </div>
+    </div>
+
 
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-md" role="document" id="help-cont" style="width:50%">

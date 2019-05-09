@@ -19,9 +19,9 @@ var map = new mapboxgl.Map({
   zoom: 12
 });
 
-// var colorRamp = ["#bcbcbc","#21BFD7", "#26A1E3","#2C84F0" ,"#6955F5", "#A626FB"];
+var colorRamp = ["#bcbcbc","#21BFD7", "#26A1E3","#6955F5" ,"#A626FB", "#D01B1B"];
 
-var colorRamp = ["#bcbcbc",'#21BFD7', '#2C84F0' ,'#A626FB', '#D01B1B','#21D78F'];
+// var colorRamp = ["#bcbcbc",'#21BFD7', '#2C84F0' ,'#A626FB', '#D01B1B','#21D78F'];
 var  brks = [-1.562,2.5,5,10,25,90];
 
 var plot1Func = function() {
@@ -174,13 +174,13 @@ map.on('style.load',function(){
             property: 'Predicted',
             stops: [
               [brks[0], colorRamp[0]],
-              [brks[1], colorRamp[4]],
-              [brks[2], colorRamp[3]],
+              [brks[1], colorRamp[1]],
+              [brks[2], colorRamp[2]],
               [brks[3], colorRamp[3]],
-              [brks[4], colorRamp[1]],
-              [brks[5], colorRamp[2]]]
+              [brks[4], colorRamp[4]],
+              [brks[5], colorRamp[5]]]
             },
-          'fill-opacity': 0.3,
+          'fill-opacity': 0.6,
           'fill-outline-color':'#fff',
         }
         });
@@ -208,13 +208,13 @@ map.on('style.load',function(){
               property: 'Predicted',
               stops: [
                 [brks[0], colorRamp[0]],
-                [brks[1], colorRamp[4]],
-                [brks[2], colorRamp[3]],
+                [brks[1], colorRamp[1]],
+                [brks[2], colorRamp[2]],
                 [brks[3], colorRamp[3]],
-                [brks[4], colorRamp[1]],
-                [brks[5], colorRamp[2]]]
+                [brks[4], colorRamp[4]],
+                [brks[5], colorRamp[5]]]
               },
-            'fill-opacity': 0.3,
+            'fill-opacity': 0.6,
             'fill-outline-color':'#fff',
           }
           });
@@ -237,13 +237,13 @@ map.on('style.load',function(){
                 property: 'Predicted',
                 stops: [
                   [brks[0], colorRamp[0]],
-                  [brks[1], colorRamp[4]],
-                  [brks[2], colorRamp[3]],
+                  [brks[1], colorRamp[1]],
+                  [brks[2], colorRamp[2]],
                   [brks[3], colorRamp[3]],
-                  [brks[4], colorRamp[1]],
-                  [brks[5], colorRamp[2]]]
+                  [brks[4], colorRamp[4]],
+                  [brks[5], colorRamp[5]]]
                 },
-              'fill-opacity': 0.3,
+              'fill-opacity': 0.6,
               'fill-outline-color':'#fff',
             }
             });
@@ -267,13 +267,13 @@ map.on('style.load',function(){
                   property: 'Predicted',
                   stops: [
                     [brks[0], colorRamp[0]],
-                    [brks[1], colorRamp[4]],
-                    [brks[2], colorRamp[3]],
+                    [brks[1], colorRamp[1]],
+                    [brks[2], colorRamp[2]],
                     [brks[3], colorRamp[3]],
-                    [brks[4], colorRamp[1]],
-                    [brks[5], colorRamp[2]]]
+                    [brks[4], colorRamp[4]],
+                    [brks[5], colorRamp[5]]]
                   },
-                'fill-opacity': 0.3,
+                'fill-opacity': 0.6,
                 'fill-outline-color':'#fff',
               }
               });
