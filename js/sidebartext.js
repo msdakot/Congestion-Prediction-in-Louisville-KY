@@ -77,16 +77,12 @@ function addr(dat) {
   return fHtml;
 }
 
-var mt;
-
-// document.getElementById('mslider').addEventListener('input', function(e) {
-//   mt = parseInt(e.target.value);
-//     // console.log(mt);
-// });
+var mt,weekD,chartJson,chartM;
 
 
 var polyAr = [
-  "https://raw.githubusercontent.com/msdakot/Congestion-Prediction-in-Louisville-KY/master/database/fishJan.geojson",
+  // "https://raw.githubusercontent.com/msdakot/Congestion-Prediction-in-Louisville-KY/master/database/fishJan.geojson",
+  "https://raw.githubusercontent.com/msdakot/Congestion-Prediction-in-Louisville-KY/master/database/fishJan_W.geojson",
   "https://raw.githubusercontent.com/msdakot/Congestion-Prediction-in-Louisville-KY/master/database/fishFeb.geojson",
   "https://raw.githubusercontent.com/msdakot/Congestion-Prediction-in-Louisville-KY/master/database/fishMar.geojson",
   "https://raw.githubusercontent.com/msdakot/Congestion-Prediction-in-Louisville-KY/master/database/fishApr.geojson"
@@ -94,20 +90,7 @@ var polyAr = [
   // "https://raw.githubusercontent.com/msdakot/Congestion-Prediction-in-Louisville-KY/master/database/fishJun.geojson"
 ];
 
-function choosepoly(n){
-  if(n==1){return polyAr[0];
-  } else if (n==2) {
-    return polyAr[1];}
-  // }else if (n==3) {
-  //   return poly[2];
-  // }else if (n==4) {
-  //   return poly[3];
-  // }else if (n==5) {
-  //   return poly[4];
-  // } else if (n==6) {
-  //   return poly[5];
-  // }
-}
+
 
 
 
@@ -116,9 +99,13 @@ var poly = polyAr[0];
 var polysb = polyAr[1];
 var fishHr = "https://raw.githubusercontent.com/msdakot/Congestion-Prediction-in-Louisville-KY/master/database/fish_av_hour.geojson";
 var fishwDay = "https://raw.githubusercontent.com/msdakot/Congestion-Prediction-in-Louisville-KY/master/database/fish_av_wday.geojson";
-var fishhour,fishWeek,polyparsed;
+var charturl ="https://raw.githubusercontent.com/msdakot/Congestion-Prediction-in-Louisville-KY/master/database/chart.json";
+var fishhour,fishWeek,polyparsed,chartPar;
 
-
+$.ajax(charturl).done(function(fd) {
+  chartPar = JSON.parse(fd);
+  console.log("chart json done!");
+});
 
 $.ajax(fishHr).done(function(fdat) {
   // Parse JSON
@@ -197,6 +184,10 @@ map.on('style.load',function(){
           'fill-outline-color':'#fff',
         }
         });
+
+        chartFilter(1,chartPar);
+        chartWeek("Monday",chartM);
+        createChart(chartJson);
 
 
         map.addSource('fishnetsF', {
@@ -290,74 +281,6 @@ map.on('style.load',function(){
 
               yetano("grids");
 
-
-        // var popup = new mapboxgl.Popup({
-        //   closeButton: false,
-        //   closeOnClick: false
-        // });
-      //
-      // map.on('mouseenter', 'grids', function (e) {
-      //       map.getCanvas().style.cursor = 'pointer';
-      //
-      //       // var coords = grids[0].geometry.coordinates.slice();
-      //       // var id = grids[0].properties.FishnetID;
-      //       // var preds = e.features[0].properties.Predicted;
-      //       // var obs = e.features[0].properties.Observed;
-      //       // var hr= e.features[0].properties.Hours;
-      //       // var wday = e.features[0].properties.Weekday;
-      //       // var err = e.features[0].properties.MAE;
-      //       //
-      //       // // var fortHML = "<strong>"id"</strong>"+"\n"+wDay+ " "+hr.toString()+" mins"+"\n"+"Obs. length:" + " "+obs.tostring()+" mins"+"\n"+"Pre. length:"+ " "+"mins"+"Error: "+ err.toString()+"mins";
-      //       //
-      //       // popup.setLngLat(coords)
-      //       // .setHTML(fortHML)
-      //       // .addTo(map);
-      //
-      //       // if (e.features.length > 0) {
-      //       //   if (hoveredStateId) {
-      //       //   map.setFeatureState({source: 'states', id: hoveredStateId}, { hover: false});
-      //       //   }
-      //       //   hoveredStateId = e.features[0].id;
-      //       //   map.setFeatureState({source: 'states', id: hoveredStateId}, { hover: true});
-      //       //   }
-      //   });
-      //
-      //
-      // map.on('mouseleave', 'grids', function () {
-      //       map.getCanvas().style.cursor = '';
-      //       popup.remove();
-      //   });
-      //
-      //
-      //   // document.getElementById('mslider').addEventListener('input', function(e) {
-      //   //   var month = parseInt(e.target.value);
-      //   //   // update the map
-      //   //     flt_month = ['==', "Mnth", month];
-      //   //     map.setFilter('grids', ['all', flt_month, flt_wDay, flt_hr]);
-      //   //     console.log(flt_month);
-      //   // });
-      //
-      // document.getElementById('wslider').addEventListener('input', function(e) {
-      //   var wDay = parseInt(e.target.value);
-      //   var weekD = getWeekday(wDay);
-      //   // update the map
-      //     flt_wDay = ['==', "Weekday", weekD];
-      //     map.setFilter('grids', ['all',flt_wDay, flt_hr]);
-      //     console.log(weekD);
-      //   });
-      //
-      //   function filterBy(hour) {
-      //
-      //       var flt_hr = ['==', "Hour", hour];
-      //       map.setFilter('grids', ['all',flt_wDay, flt_hr]);
-      //       // map.setLayoutProperty('grids_empty', 'visibility', 'none');
-      //   }
-      //
-      // document.getElementById('hslider').addEventListener('input', function(e) {
-      //   var hour= parseInt(e.target.value);
-      //     console.log(hour);
-      //     filterBy(hour);
-      // });
 
 
       // Single Gridcell selection

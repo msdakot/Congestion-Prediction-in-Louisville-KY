@@ -3,55 +3,52 @@ $(window).on('load',function(){
 $('#exampleModal').modal('show');
 });
 
-// $('#close').click( function(){
-//    $('.navbar-primary').collapse('toggle');
-//  });
 
-  $('.btn-expand-collapse').click(function(e) {
-    $('.navbar-primary').toggleClass('collapsed');
-    $(".rotate").toggleClass("down");
-  });
+$('.btn-expand-collapse').click(function(e) {
+  $('.navbar-primary').toggleClass('collapsed');
+  $(".rotate").toggleClass("down");
+});
 
+$('.filter-manager').hide();
+$('.interaction-manager').hide();
+$('.chart-container').hide();
+$('.hr-scrl').hide();
+
+$('.Interact').click(function(e){
   $('.filter-manager').hide();
-  $('.interaction-manager').hide();
   $('.chart-container').hide();
   $('.hr-scrl').hide();
+  $('.interaction-manager').show();
+});
 
-  $('.Interact').click(function(e){
+$('.Filter').click(function(e) {
+  $('.interaction-manager').hide();
+  $('.filter-manager').show();
+  $('.chart-container').show();
+  $('.hr-scrl').show();
+  map.setLayoutProperty('grids', 'visibility', 'visible');
+  map.setLayoutProperty('grid-highlighted', 'visibility', 'none');
+});
+
+
+$('#myModal').on('shown.bs.modal', function () {
+  $('#myInput').trigger('focus');
+  $('#chart2').show();
+});
+
+var fishinfo =  function () {
     $('.filter-manager').hide();
     $('.chart-container').hide();
     $('.hr-scrl').hide();
     $('.interaction-manager').show();
-  });
-
-  $('.Filter').click(function(e) {
-    $('.interaction-manager').hide();
-    $('.filter-manager').show();
-    $('.chart-container').show();
-    $('.hr-scrl').show();
-    map.setLayoutProperty('grids', 'visibility', 'visible');
-    map.setLayoutProperty('grid-highlighted', 'visibility', 'none');
-  });
-
-
-  $('#myModal').on('shown.bs.modal', function () {
-    $('#myInput').trigger('focus');
-    $('#chart2').show();
-  });
-
-  var fishinfo =  function () {
-      $('.filter-manager').hide();
-      $('.chart-container').hide();
-      $('.hr-scrl').hide();
-      $('.interaction-manager').show();
-  };
+};
 
 function colpa () {
-      $('.navbar-primary').toggleClass('collapsed');
-      $(".rotate").toggleClass("down");
+    $('.navbar-primary').toggleClass('collapsed');
+    $(".rotate").toggleClass("down");
   };
-//
-  $(".filt-list li a").click(function(){
+
+$(".filt-list li a").click(function(){
   $(this).parents(".dropdown").find('.btn-secondary').html($(this).text() + ' <span class="item-dropdown"></span>');
   $(this).parents(".dropdown").find('.btn').val($(this).html());
   var red= $(this).parents(".dropdown").find('.btn').val($(this).html());
@@ -59,42 +56,63 @@ function colpa () {
   console.log(red);
 });
 
-
 $('#demolist li a').on('click', function(){
     $('#datebox').val($(this).html());
 });
 
 
-var mt;
+// var mt,weekD,chartJson,chartM ;
 
-// document.getElementById('mslider').addEventListener('input', function(e) {
-//   mt = parseInt(e.target.value);
-//     console.log(mt);
-// });
 
-function choosepoly(n){
-  if(n==1){return polyAr[0];
+
+function getWeekday(n){
+  if(n==1){
+    return "Monday";
   } else if (n==2) {
-    return polyAr[1];}
-  // }else if (n==3) {
-  //   return poly[2];
-  // }else if (n==4) {
-  //   return poly[3];
-  // }else if (n==5) {
-  //   return poly[4];
-  // } else if (n==6) {
-  //   return poly[5];
-  // }
-}
+    return "Tuesday";
+  } else if(n==3) {
+    return "Wednesday";
+  }else if(n==4) {
+    return "Thursday";
+  } else if(n==5) {
+    return "Friday";
+  }else if(n==6) {
+    return "Saturday";
+  }else if(n==7) {
+    return "Sunday";
+  }
+};
 
-// $('.mslider').Slider({ id: "slider12b", min: 1, max: 12, range: true, value:[3, 7] });
+function getMonth(n){
+  if(n==1){
+    return "January";
+  } else if (n==2) {
+    return "Febuary";
+  } else if(n==3) {
+    return "March";
+  }else if(n==4) {
+    return "April";
+  } else if(n==5) {
+    return "May";
+  }else if(n==6) {
+    return "June";
+  }else if(n==7) {
+    return "July";
+  }else if(n==8) {
+    return "August";
+  }else if(n==9) {
+    return "September";
+  }else if(n==10) {
+    return "October";
+  }else if(n==11) {
+    return "November";
+  }else if(n==12) {
+    return "December";
+  }
+};
 
-// $('.mslider').on('change', function(event) {
-//   .addEventListener('input', function(e) {
-//     mt = parseInt(e.target.value);
-//         console.log(mt);
-//   });
-// });
+
+
 var a =1;
 
 $('#mslider').slider().on('change', function(e) {
@@ -104,8 +122,7 @@ $('#mslider').slider().on('change', function(e) {
     } else {
       console.log("still on ", a);
     }
-
-    return chMonth(a);
+    return chMonth(a),chartFilter(a,chartPar);
 });
 
 
@@ -131,21 +148,50 @@ function chMonth(n){
 
 
 function yetano(gr){
+
+
+  var popup = new mapboxgl.Popup({
+    closeButton: false,
+    closeOnClick: false
+  });
+
+
   map.on('mouseenter', gr, function (e) {
         map.getCanvas().style.cursor = 'pointer';
+
+        var coordinates = e.lngLat;
+
+        var id =  "Grid ID: " +e.features[0].properties.FishnetID.toString();
+        var Month = getMonth(e.features[0].properties.Mnth);
+        var Wday = e.features[0].properties.Weekday;
+        var Weat = e.features[0].properties.Weather;
+        var hr = e.features[0].properties.Hour.toString() +" hrs";
+        var obs = e.features[0].properties.Observed.toString() +" mins";
+        var Pred = e.features[0].properties.Predicted.toString()+" mins";
+        var er =e.features[0].properties.MAE.toString()+" mins";
+
+        var forHTML = "<strong>"+id.fontsize(2)+"</strong>"+"<br>"+"<br>"+ Month+" "+Wday+ " "+ hr+"<br>"+"Weather: "+Weat+"<br>"+"Predicted: "+Pred+"<br>"+"Observed: "+obs+"<br>"+"Error: "+er;
+
+        popup.setLngLat(coordinates)
+          .setHTML(forHTML)
+          .addTo(map);
+
     });
 
 
   map.on('mouseleave', gr, function () {
         map.getCanvas().style.cursor = '';
+        popup.remove();
     });
       //
       document.getElementById('wslider').addEventListener('input', function(e) {
         var wDay = parseInt(e.target.value);
-        var weekD = getWeekday(wDay);
+         weekD = getWeekday(wDay);
         // update the map
           flt_wDay = ['==', "Weekday", weekD];
           map.setFilter(gr, ['all',flt_wDay, flt_hr]);
+          chartWeek(weekD,chartM);
+          createChart(chartJson);
           console.log("inside function",weekD);
         });
 
@@ -161,4 +207,19 @@ function yetano(gr){
           console.log(hour);
           filterBy(hour);
       });
+}
+
+
+
+function chartFilter (m,arr){
+    chartM = arr.filter(f=>f.Mnth ===m);
+    console.log(chartM);
+    };
+
+
+function chartWeek (w,arr){
+  // let w = weekD;
+  chartJson= arr.filter(f=> f.Weekday===w);
+  console.log(chartJson);
+  // return chartJson;
 }
