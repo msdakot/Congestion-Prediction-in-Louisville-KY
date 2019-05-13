@@ -148,28 +148,6 @@ $('#mslider').slider().on('change', function(e) {
     return chMonth(a),chartFilter(a,chartPar);
 });
 
-
-//
-function chMonth(n){
-  var grprev, gr;
-  if(n==2) {
-      grprev= 'grids';
-      gr  = 'grids-f';
-    } else if (n==3) {
-      grprev= 'grids-f';
-      gr = 'grids-m';
-    } else if(n==4) {
-      grprev= 'grids-m';
-      gr = 'grids-a';
-    }
-    map.setLayoutProperty(gr, 'visibility', 'visible');
-    map.setLayoutProperty(grprev, 'visibility', 'none');
-    console.log("other month turned on!");
-
-    yetano(gr);
-};
-
-
 function yetano(gr){
 
 
@@ -207,33 +185,45 @@ function yetano(gr){
         map.getCanvas().style.cursor = '';
         popup.remove();
     });
-      //
-      document.getElementById('wslider').addEventListener('input', function(e) {
-        var wDay = parseInt(e.target.value);
-         weekD = getWeekday(wDay);
-        // update the map
-          flt_wDay = ['==', "Weekday", weekD];
-          map.setFilter(gr, ['all',flt_wDay, flt_hr]);
-          chartWeek(weekD,chartM);
-          createChart(chartJson);
-          console.log("inside function",weekD);
-        });
 
-        // flt_wea = ['==',"Weather",red];
-
-        function filterBy(hour) {
-
-            var flt_hr = ['==', "Hour", hour];
-            map.setFilter(gr, ['all',flt_wDay, flt_hr]);
-            // map.setLayoutProperty('grids_empty', 'visibility', 'none');
-        }
-
-      document.getElementById('hslider').addEventListener('input', function(e) {
-        var hour= parseInt(e.target.value);
-          console.log(hour);
-          filterBy(hour);
-      });
 }
+
+
+
+function chMonth(n){
+  var grprev, gr,gr3;
+  if(n==1){
+    gr  = 'grids';
+    grprev='none';
+    gr3 = 'grids-f'
+    } else if(n==2) {
+      grprev= 'grids';
+      gr  = 'grids-f';
+      gr3 = 'grids-m'
+    } else if (n==3) {
+      grprev= 'grids-f';
+      gr = 'grids-m';
+      gr3 = 'grids-a'
+    } else if(n==4) {
+      grprev= 'grids-m';
+      gr = 'grids-a';
+      gr3 = 'grids-j'
+    }
+
+    if(gr!=='grids'){
+
+    map.setLayoutProperty(gr, 'visibility', 'visible');
+    map.setLayoutProperty(grprev, 'visibility', 'none');
+    map.setLayoutProperty(gr3, 'visibility', 'none');
+  }else {
+     map.setLayoutProperty(gr, 'visibility', 'visible');
+     map.setLayoutProperty(gr3, 'visibility', 'none');
+  }
+    console.log("other month turned on!");
+
+    yetano(gr);
+    sliderRegi(gr);
+};
 
 
 
@@ -248,4 +238,36 @@ function chartWeek (w,arr){
   chartJson= arr.filter(f=> f.Weekday===w);
   console.log(chartJson);
   // return chartJson;
+}
+
+function sliderRegi(gr){
+
+  $('#wslider').on('input', function(e) {
+      var wDay = parseInt(e.target.value);
+       weekD = getWeekday(wDay);
+      // update the map
+        // flt_wDay = ['==',"Weekday", weekD];
+        flt_wDay = ['==','Weekday',weekD]
+        console.log(flt_wDay,flt_hr);
+        map.setFilter(gr, ['all',flt_wDay, flt_hr]);
+        chartWeek(weekD,chartM);
+        createChart(chartJson);
+        console.log("inside function",weekD);
+      });
+
+      // flt_wea = ['==',"Weather",red];
+
+      function filterBy(hour) {
+
+          var flt_hr = ['==',"Hour", hour];
+          map.setFilter(gr, ['all',flt_wDay, flt_hr]);
+          // map.setLayoutProperty('grids_empty', 'visibility', 'none');
+      }
+
+    $('#hslider').on('input', function(e) {
+      var hour= parseInt(e.target.value);
+        console.log(hour);
+        filterBy(hour);
+    });
+
 }
